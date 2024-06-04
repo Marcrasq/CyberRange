@@ -1,0 +1,32 @@
+<Sysmon schemaversion="4.40">
+  <!-- Capture process creation events -->
+  <EventFiltering>
+    <RuleGroup name="Process Create" groupRelation="or">
+      <ProcessCreate onmatch="include">
+        <CommandLine condition="contains">mimikatz</CommandLine>
+        <CommandLine condition="contains">psexec</CommandLine>
+        <CommandLine condition="contains">incognito</CommandLine>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- Capture image load events -->
+    <RuleGroup name="Image Load" groupRelation="or">
+      <ImageLoad onmatch="include">
+        <Image condition="contains">mimikatz</Image>
+        <Image condition="contains">psexec</Image>
+        <Image condition="contains">incognito</Image>
+      </ImageLoad>
+    </RuleGroup>
+
+    <!-- Capture access to sensitive processes -->
+    <RuleGroup name="Process Access" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <TargetImage condition="contains">lsass.exe</TargetImage>
+        <TargetImage condition="contains">winlogon.exe</TargetImage>
+        <TargetImage condition="contains">services.exe</TargetImage>
+        <SourceImage condition="contains">mimikatz.exe</SourceImage>
+        <SourceImage condition="contains">psexec.exe</SourceImage>
+      </ProcessAccess>
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>
