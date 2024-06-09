@@ -1,5 +1,5 @@
 <Sysmon schemaversion="4.40">
-  <!-- Capture process creation events -->
+
   <EventFiltering>
     <RuleGroup name="Process Create" groupRelation="or">
       <ProcessCreate onmatch="include">
@@ -9,7 +9,7 @@
       </ProcessCreate>
     </RuleGroup>
 
-    <!-- Capture image load events -->
+
     <RuleGroup name="Image Load" groupRelation="or">
       <ImageLoad onmatch="include">
         <Image condition="contains">mimikatz</Image>
@@ -18,7 +18,7 @@
       </ImageLoad>
     </RuleGroup>
 
-    <!-- Capture access to sensitive processes -->
+
     <RuleGroup name="Process Access" groupRelation="or">
       <ProcessAccess onmatch="include">
         <TargetImage condition="contains">lsass.exe</TargetImage>
